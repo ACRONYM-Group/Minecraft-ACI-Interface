@@ -1,6 +1,6 @@
 import sys
 import time
-import ACI.ACI
+import ACI
 
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
@@ -30,10 +30,10 @@ while True:
         mcr.command("/setblock 1254 12 624 152")
 
     resp = mcr.command("/list")
-    conn["Minecraft"]["PlayerList"] = resp
+    conn["minecraft"]["PlayerList"] = resp
 
-    if conn["Minecraft"]["stop"] == "True":
-        conn["Minecraft"]["stop"] = "False"
+    if conn["minecraft"]["stop"] == "True":
+        conn["minecraft"]["stop"] = "False"
         mcr.command("/stop")
 
     
