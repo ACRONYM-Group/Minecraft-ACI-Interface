@@ -1,0 +1,3 @@
+[submodule "ACI"]
+	path = ACI
+	url = https://github.com/ACRONYM-Group/ACI.git

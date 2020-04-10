@@ -1,6 +1,6 @@
 import sys
 import time
-import ACI
+import ACI.ACI
 
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
