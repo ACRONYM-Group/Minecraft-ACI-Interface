@@ -34,7 +34,7 @@ def tail(f, lines=20):
         lines_to_go -= lines_found
         block_end_byte -= BLOCK_SIZE
         block_number -= 1
-    all_read_text = b''.join(reversed(blocks))
+    all_read_text = b''.join(reversed(blocks.encode('utf-8')))
     return b'\n'.join(all_read_text.splitlines()[-total_lines_wanted:])
 
 while True:
