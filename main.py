@@ -1,6 +1,7 @@
 import sys
 import time
 import ACI
+import os
 
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
@@ -13,29 +14,6 @@ print("ONLINE")
 print(" ")
 
 resp = mcr.command("/testforblock 1253 12 626 651")
-
-def tail(f, lines=20):
-    total_lines_wanted = lines
-
-    BLOCK_SIZE = 1024
-    f.seek(0, 2)
-    block_end_byte = f.tell()
-    lines_to_go = total_lines_wanted
-    block_number = -1
-    blocks = []
-    while lines_to_go > 0 and block_end_byte > 0:
-        if (block_end_byte - BLOCK_SIZE > 0):
-            f.seek(block_number*BLOCK_SIZE, 2)
-            blocks.append(f.read(BLOCK_SIZE))
-        else:
-            f.seek(0,0)
-            blocks.append(f.read(block_end_byte))
-        lines_found = blocks[-1].count('\n')
-        lines_to_go -= lines_found
-        block_end_byte -= BLOCK_SIZE
-        block_number -= 1
-    all_read_text = b''.join(reversed(blocks.encode('utf-8')))
-    return b'\n'.join(all_read_text.splitlines()[-total_lines_wanted:])
 
 while True:
     resp = mcr.command("/testforblock 1253 12 626 651")
@@ -64,9 +42,7 @@ while True:
         mcr.command(commandToExecute)
         conn["minecraft"]["command"] = ""
 
-    file = open("/home/blightfall/server/logs/latest.log")
-    conn["minecraft"]["log"] = tail(file)
-    file.close()
+    conn["minecraft"]["log"] = os.popen('tail -n 20 /home/blightfall/server/logs/latest.log').read()
 
     
     time.sleep(1)
