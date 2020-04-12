@@ -14,10 +14,10 @@ print(" ")
 
 resp = mcr.command("/testforblock 1253 12 626 651")
 
- def tail(f, lines=20):
-    total_lines_wanted = lines
+def tail(f, lines=20):
+total_lines_wanted = lines
 
-    BLOCK_SIZE = 1024
+BLOCK_SIZE = 1024
     f.seek(0, 2)
     block_end_byte = f.tell()
     lines_to_go = total_lines_wanted
