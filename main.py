@@ -30,7 +30,7 @@ def tail(f, lines=20):
         else:
             f.seek(0,0)
             blocks.append(f.read(block_end_byte))
-        lines_found = blocks[-1].count(b'\n')
+        lines_found = blocks[-1].count('\n')
         lines_to_go -= lines_found
         block_end_byte -= BLOCK_SIZE
         block_number -= 1
