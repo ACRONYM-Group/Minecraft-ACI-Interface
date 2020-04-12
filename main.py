@@ -60,7 +60,7 @@ while True:
         mcr.command("/stop")
 
     commandToExecute = conn["minecraft"]["command"]
-    if commandToExecute != "":
+    if commandToExecute != "" and commandToExecute != None:
         mcr.command(commandToExecute)
         conn["minecraft"]["command"] = ""
 
