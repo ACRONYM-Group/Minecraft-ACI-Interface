@@ -2,6 +2,10 @@ import sys
 import time
 import ACI
 import os
+import psutil
+import json
+
+
 
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
@@ -18,10 +22,21 @@ while not connected:
         print("Unable to Connect To Server. Trying again in 5 seconds.")
     time.sleep(5);
 
+PROCNAME = "java"
+
+for proc in psutil.process_iter():
+    if proc.name() == PROCNAME:
+        print(proc)
+        javaProccess = proc
+
 print("ONLINE")
 print(" ")
 
 resp = mcr.command("/testforblock 1253 12 626 651")
+
+resourceMonitorCounter = 0
+memUsage = []
+cpuUsage = []
 
 while True:
     resp = mcr.command("/testforblock 1253 12 626 651")
@@ -56,5 +71,20 @@ while True:
     conn["minecraft"]["numberOfDays"] = mcr.command("/time query day")
     conn["minecraft"]["worldAge"] = mcr.command("/time query gametime")
 
+    resourceMonitorCounter += 1
+
+    if resourceMonitorCounter == 5:
+        cpuUsage.append(javaProccess.cpu_percent())
+        memUsage.append(javaProccess.memory_percent())
+        if len(cpuUsage) >= 60:
+            cpuUsage.pop(0)
+
+        if len(memUsage) >= 60:
+            memUsage.pop(0)
+
+        resourceMonitorCounter = 0
+    
+    conn["minecraft"]["memUsage"] = json.dumps(memUsage)
+    conn["minecraft"]["cpuUsage"] = json.dumps(cpuUsage)
     
     time.sleep(1)
