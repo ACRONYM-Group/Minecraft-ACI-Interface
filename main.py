@@ -8,8 +8,16 @@ time.sleep(2)
 
 from mcrcon import MCRcon
 
+connected = False
 mcr = MCRcon("35.225.173.218", "MinecraftIsFun")
-mcr.connect()
+while not connected:
+    try:
+        mcr.connect()
+        connected = True
+    except Exception:
+        print("Unable to Connect To Server. Trying again in 5 seconds.")
+    time.sleep(5);
+
 print("ONLINE")
 print(" ")
 
