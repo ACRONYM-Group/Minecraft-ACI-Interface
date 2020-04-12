@@ -52,5 +52,9 @@ while True:
 
     conn["minecraft"]["log"] = os.popen('tail -n 20 /home/blightfall/server/logs/latest.log').read()
 
+    conn["minecraft"]["dayTime"] = mcr.command("/time query daytime")
+    conn["minecraft"]["numberOfDays"] = mcr.command("/time query day")
+    conn["minecraft"]["worldAge"] = mcr.command("/time query gametime")
+
     
     time.sleep(1)
