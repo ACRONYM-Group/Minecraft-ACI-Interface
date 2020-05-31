@@ -5,11 +5,16 @@ import os
 import psutil
 import json
 
+ACItokenfile = open("/home/tokens/mcaci.txt", 'r')
+ACItoken = ACItokenfile.read()
+ACItokenfile.close()
+
 
 
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
 
+conn.authenticate("bots.tictac", ACIToken)
 from mcrcon import MCRcon
 
 connected = False
