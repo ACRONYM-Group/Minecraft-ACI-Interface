@@ -14,7 +14,7 @@ ACItokenfile.close()
 conn = ACI.create(ACI.Client, 8675, "127.0.0.1")
 time.sleep(2)
 
-conn.authenticate("bots.tictac", ACItoken)
+conn.authenticate("bots.mcaci", ACItoken)
 from mcrcon import MCRcon
 
 connected = False
