@@ -6,7 +6,7 @@ import psutil
 import json
 
 ACItokenfile = open("/home/tokens/mcaci.txt", 'r')
-ACItoken = ACItokenfile.read()
+ACItoken = ACItokenfile.read()[:-1]
 ACItokenfile.close()
 
 
