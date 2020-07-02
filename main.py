@@ -76,20 +76,11 @@ while True:
     conn["minecraft"]["numberOfDays"] = mcr.command("/time query day")
     conn["minecraft"]["worldAge"] = mcr.command("/time query gametime")
 
-    resourceMonitorCounter += 1
+    cpuUsage = javaProccess.cpu_percent()
+    memUage = javaProccess.memory_percent()
 
-    if resourceMonitorCounter == 5:
-        cpuUsage.append(javaProccess.cpu_percent())
-        memUsage.append(javaProccess.memory_percent())
-        if len(cpuUsage) >= 60:
-            cpuUsage.pop(0)
-
-        if len(memUsage) >= 60:
-            memUsage.pop(0)
-
-        resourceMonitorCounter = 0
     
-    conn["minecraft"]["memUsage"] = json.dumps(memUsage)
-    conn["minecraft"]["cpuUsage"] = json.dumps(cpuUsage)
+    conn["minecraft"].append_index(memUsage, "memUsage")
+    conn["minecraft"].append_index(cpuUsage, "cpuUsage")
     
     time.sleep(1)
